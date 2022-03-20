@@ -1,5 +1,15 @@
 module.exports = {
+  devServer: {
+    client: {
+      overlay: false,
+    },
+  },
   module: {
+    devServer: {
+      client: {
+        overlay: false,
+      },
+    },
     rules: [
       {
         test: /\.s[ac]ss$/i,

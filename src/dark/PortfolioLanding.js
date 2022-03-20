@@ -1,11 +1,14 @@
 import React,{useState} from "react";
-import ScrollToTop from "react-scroll-up";
 import Scrollspy from 'react-scrollspy'
-import {Row,Container,Col,Card,Form,Button} from 'react-bootstrap';
+import {Row,Container,Col,Card,Form,Button,Nav} from 'react-bootstrap';
 //import BlogContent from "../elements/blog/BlogContent";
 import ScrollAnimation from "react-animate-on-scroll";
-import { Link, Element } from "react-scroll";
-
+import  * as reactScrool from "react-scroll";
+import {  Element } from "react-scroll";
+import {
+  BrowserRouter as Router,
+  Route,Link 
+} from "react-router-dom";
 import { Image } from 'antd';
 
 const PortfolioLanding = () => {
@@ -29,56 +32,77 @@ const PortfolioLanding = () => {
       <header className="header__main-container">
         <nav className="navbar__content-container navbar__main-container">
           <span><font className="vertical-align"><font className="fonttitle vertical-align">Portafolio web</font></font></span>
+          <Router> 
+            <ul className="navbar__menu-container">
+              <Scrollspy data={scrollSpyData}>
 
-          <ul className="navbar__menu-container">
-           <Scrollspy data={scrollSpyData}>
-           <Link
-              activeClass="activeCategoryLink"
-              className={"sobreMi"}
-              to={"sobreMi".toString()}
-              spy={true}
-              smooth={true}
-              duration={500}
-              offset={10}
-                >
-                  <li><a href="#sobreMi">Sobre Mi</a></li>
-             </Link>
-             <Link
-              activeClass="activeCategoryLink"
-              className={"proyecto"}
-              to={"proyecto".toString()}
-              spy={true}
-              smooth={true}
-              duration={500}
-              offset={10}
-              >  
-                <li><a href="#proyecto">Proyectos</a></li>
-              </Link>
-              <Link
-                activeClass="activeCategoryLink"
-                className={"Habilidades"}
-                to={"Habilidades".toString()}
-                spy={true}
-                smooth={true}
-                duration={500}
-                offset={10}
-              >  
-                <li><a href="#Habilidades">Habilidades</a></li>
-              </Link> 
-              <Link
-                activeClass="activeCategoryLink"
-                className={"contacto"}
-                to={"contacto".toString()}
-                spy={true}
-                smooth={true}
-                duration={500}
-                offset={10}
-              > 
-                <li><a href="#contacto">Contacto</a></li>
-              </Link> 
-            </Scrollspy>
-            
-          </ul>
+                    <li>
+                      <Nav  to="#sobreMi">
+                          <reactScrool.Link
+                            activeClass="activeCategoryLink"
+                            className={"sobreMi"}
+                            to={"#sobreMi".toString()}
+                            spy={true}
+                            smooth={true}
+                            duration={500}
+                            offset={10}
+                            href="#sobreMi"
+                              >
+                          Sobre Mi
+                          </reactScrool.Link></Nav>
+                    </li>
+                
+              
+                    <li>
+                    <Nav to="#proyecto">
+                    <reactScrool.Link
+                      activeClass="activeCategoryLink"
+                      className={"proyecto"}
+                      to={"proyecto".toString()}
+                      spy={true}
+                      smooth={true}
+                      duration={500}
+                      offset={10}
+                      >  
+
+                      Proyectos
+                      </reactScrool.Link>  </Nav>
+                    </li>
+                
+                
+                    <li>
+                      <reactScrool.Link
+                        activeClass="activeCategoryLink"
+                        className={"Habilidades"}
+                        to={"Habilidades".toString()}
+                        spy={true}
+                        smooth={true}
+                        duration={500}
+                        offset={10}
+                      >  
+
+                        <Nav to="#Habilidades">Habilidades</Nav>
+                      </reactScrool.Link> 
+                    </li>
+                
+                
+                    <li>
+                        <reactScrool.Link
+                          activeClass="activeCategoryLink"
+                          className={"contacto"}
+                          to={"contacto".toString()}
+                          spy={true}
+                          smooth={true}
+                          duration={500}
+                          offset={10}
+                        > 
+                          <Nav to="#contacto">Contacto</Nav>
+                        </reactScrool.Link> 
+                    </li>
+                
+              </Scrollspy>
+              
+            </ul> </Router>
         </nav>
         <div className="header__title-content">
             <h2 className="header__title-welcome">
