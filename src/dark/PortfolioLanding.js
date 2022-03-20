@@ -149,7 +149,7 @@ const PortfolioLanding = () => {
                     
                         <Card.Title className="cardTitle">¡Hola!</Card.Title>  
                         <p>
-                        Soy Ariz Hernández y soy desarrollador web, me encanta el desarrollo web y el desarrollo móvil. He realizado algunos proyectos y puedes ver mis mejores proyectos aquí o buscar mi github donde tengo todos mis proyectos.
+                        Soy Juan Ramírez Sánchez y soy desarrollador web, me encanta el desarrollo web y el desarrollo móvil. He realizado algunos proyectos y puedes ver mis mejores proyectos aquí o buscar mi github donde tengo todos mis proyectos.
                         </p>
                   </Col>
                 </Row>
