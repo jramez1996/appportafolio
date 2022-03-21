@@ -22,18 +22,6 @@ module.exports = {
           "sass-loader",
         ],
       },
-      {
-        test: /\.(js|jsx)$/,
-        use: {
-            loader: 'babel-loader',
-            options: {
-                presets: ['react', 'es2015'],
-                cacheDirectory: true,
-                plugins: ['react-hot-loader/babel',["import", { "libraryName": "antd", "libraryDirectory": "es", "style": "css" }]],
-            }
-        },
-        exclude: /node_modules/
-    },
     ],
   },
 };

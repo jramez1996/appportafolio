@@ -9,8 +9,13 @@
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "antd": "^4.19.2",
+    "axios": "^0.21.4",
+    "babel-eslint": "^10.1.0",
     "bootstrap": "^4.6.0",
     "emailjs-com": "2.6.4",
+    "eslint-config-react-app": "^7.0.0",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.29.4",
     "react": "^16.14.0",
     "react-animate-on-scroll": "^2.1.5",
     "react-bootstrap": "^2.2.1",
@@ -18,7 +23,6 @@
     "react-helmet": "^5.2.1",
     "react-icons": "^3.11.0",
     "react-modal-video": "^1.2.6",
-    "react-particles-js": "^2.7.1",
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
     "react-scroll": "^1.8.6",
@@ -27,6 +31,7 @@
     "react-tabs": "^3.2.0",
     "react-text-loop": "^2.3.0",
     "slick-carousel": "^1.8.1",
+    "sweetalert": "^2.1.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -36,12 +41,6 @@
     "eject": "react-scripts eject",
     "sass": "node-sass node_modules/react-modal-video/scss/modal-video.scss ./css/modal-video.css --output-style expanded",
     "sass:min": "node-sass ./scss/modal-video.scss ./css/modal-video.min.css --output-style compressed"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
@@ -55,7 +54,16 @@
       "last 1 safari version"
     ]
   },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
   "devDependencies": {
+    "eslint-plugin-flowtype": "^8.0.3",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-react-hooks": "^4.2.1-rc.2-next-645ec5d6f-20220317",
     "sass": "^1.49.9",
     "sass-loader": "^12.6.0",
     "webpack": "^5.70.0"

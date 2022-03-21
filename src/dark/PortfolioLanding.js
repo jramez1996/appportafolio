@@ -1,28 +1,90 @@
 import React,{useState} from "react";
-import Scrollspy from 'react-scrollspy'
+import Scrollspy from 'react-scrollspy';
 import {Row,Container,Col,Card,Form,Button,Nav} from 'react-bootstrap';
-//import BlogContent from "../elements/blog/BlogContent";
+import { FiMenu } from "react-icons/fi";
 import ScrollAnimation from "react-animate-on-scroll";
 import  * as reactScrool from "react-scroll";
-import {  Element } from "react-scroll";
-import {
-  BrowserRouter as Router,
-  Route,Link 
-} from "react-router-dom";
 import { Image } from 'antd';
-
+import { useRef } from 'react';
+import axios from 'axios';
+import swal from "sweetalert";
 const PortfolioLanding = () => {
   const [validated, setValidated] = useState(false);
+  const [isMenu, setIsMenu] = useState(false);
+  let developer=false;
+  let url="http://localhost:3005";
+  let urlProductions="https://ramez-ecommerce.herokuapp.com";
+  let urlFull=developer ? url: urlProductions ;
+  const [isMenuIcon, setIsMenuIcon] = useState(true);
+  const [nombre, setNombre] = useState("");
+  const [correo, setCorreo] = useState("");
+  const [mensaje, setMensaje] = useState("");
+  const formRef = useRef(null);
+
+  //setNombre
+  const [width, setWidth] = React.useState(window.innerWidth);
   const scrollSpyData = ["sobreMi", "proyecto", "Habilidades", "contacto"];
   const handleSubmit = (event) => {
+    event.preventDefault();
+    setValidated(true);
     const form = event.currentTarget;
-    if (form.checkValidity() === false) {
+    /*if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
-    }
+    }*/
 
-    setValidated(true);
+
+    axios.post(urlFull+"/security/registerContact", {
+      "nombre":nombre,
+      "correo":correo,
+      "mensaje":mensaje
+    })
+    .then(res => {
+      setValidated(false);
+      if(res.data.estado){
+        swal({
+          icon: "success",
+          text: "El Mensaje se registro con exíto en unos momentos estaremos en contacto."
+        });
+        setNombre("");
+        setCorreo("");
+        setMensaje("");
+      }else{
+        swal({
+          icon: "warning",
+          text: "Hubo un error en el envio de mensaje."
+        });
+      }
+      try {
+        console.log("res",formRef.current.reset()); 
+        // formRef.resetFields();
+        form.reset();
+      } catch (error) {
+        console.log("error",error);
+      }
+
+
+      
+    }).catch((e)=>{console.log("e",e);});
   };
+  //width 
+  React.useEffect(() => {
+    console.log("width",width);
+    if(width<=900){
+      setIsMenuIcon(true);
+    }else{
+      setIsMenuIcon(false);
+    }
+  }, [width]);
+  React.useEffect(() => {
+    /* Inside of a "useEffect" hook add an event listener that updates
+       the "width" state variable when the window size changes */
+    window.addEventListener("resize", () => setWidth(window.innerWidth));
+
+    /* passing an empty array as the dependencies of the effect will cause this
+       effect to only run when the component mounts, and not each time it updates.
+       We only want the listener to be added once */
+  }, []);
   return (<div> 
     <div className="active-dark">
       <div className="particles" id="tsparticles" >
@@ -31,79 +93,103 @@ const PortfolioLanding = () => {
 
       <header className="header__main-container">
         <nav className="navbar__content-container navbar__main-container">
-          <span><font className="vertical-align"><font className="fonttitle vertical-align">Portafolio web</font></font></span>
-          <Router> 
-            <ul className="navbar__menu-container">
-              <Scrollspy data={scrollSpyData}>
+          <span><font className="vertical-align"><font className="fonttitle fonttitleApp vertical-align"> Portafolio web</font></font></span>
+          {
+             isMenuIcon ?
 
-                    <li>
-                      <Nav  to="#sobreMi">
-                          <reactScrool.Link
-                            activeClass="activeCategoryLink"
-                            className={"sobreMi"}
-                            to={"#sobreMi".toString()}
-                            spy={true}
-                            smooth={true}
-                            duration={500}
-                            offset={10}
-                            href="#sobreMi"
-                              >
-                          Sobre Mi
-                          </reactScrool.Link></Nav>
-                    </li>
-                
+             <div className="menuFi">
+               <FiMenu onClick={()=>{setIsMenu(!isMenu);}} />
+             </div>
+             :
+             null 
+             
+          }
+          {
+            isMenuIcon==false ||  isMenu==true  ?
+              <div
               
-                    <li>
-                    <Nav to="#proyecto">
-                    <reactScrool.Link
-                      activeClass="activeCategoryLink"
-                      className={"proyecto"}
-                      to={"proyecto".toString()}
-                      spy={true}
-                      smooth={true}
-                      duration={500}
-                      offset={10}
-                      >  
+              className="routerList">
+                <div className={isMenuIcon==false ||  isMenu==true ? "navbar__menu-container " : "navbar__menu-container-hide"} > 
+                  <center className="centerList">
+                    <Scrollspy 
+                        className="containerListt" 
+                        data={scrollSpyData}>
 
-                      Proyectos
-                      </reactScrool.Link>  </Nav>
-                    </li>
-                
-                
-                    <li>
-                      <reactScrool.Link
-                        activeClass="activeCategoryLink"
-                        className={"Habilidades"}
-                        to={"Habilidades".toString()}
-                        spy={true}
-                        smooth={true}
-                        duration={500}
-                        offset={10}
-                      >  
+                        <li>
+                          <Nav to="#sobreMi" onClick={()=>{setIsMenu(false);}}>
+                            <reactScrool.Link
+                              activeClass="activeCategoryLink"
+                              className={"sobreMi"}
+                              to={"sobreMi"}
+                              spy={true}
+                              smooth={true}
+                              duration={500}
+                              offset={10}
+                              onClick={()=>{setIsMenu(false);}}
+                              >  
 
-                        <Nav to="#Habilidades">Habilidades</Nav>
-                      </reactScrool.Link> 
-                    </li>
-                
-                
-                    <li>
-                        <reactScrool.Link
-                          activeClass="activeCategoryLink"
-                          className={"contacto"}
-                          to={"contacto".toString()}
-                          spy={true}
-                          smooth={true}
-                          duration={500}
-                          offset={10}
-                        > 
-                          <Nav to="#contacto">Contacto</Nav>
-                        </reactScrool.Link> 
-                    </li>
-                
-              </Scrollspy>
-              
-            </ul> </Router>
+                              Sobre Mi
+                              </reactScrool.Link>  </Nav>
+                          </li>
+                         <li>
+                          <Nav to="#proyecto" onClick={()=>{setIsMenu(false);}}>
+                            <reactScrool.Link
+                              activeClass="activeCategoryLink"
+                              className={"proyecto"}
+                              to={"proyecto".toString()}
+                              spy={true}
+                              smooth={true}
+                              duration={500}
+                              offset={10}
+                              onClick={()=>{setIsMenu(false);}}
+                              >  
+
+                              Proyectos
+                              </reactScrool.Link>  </Nav>
+                          </li>
+                          <li>
+                            <reactScrool.Link
+                              activeClass="activeCategoryLink"
+                              className={"Habilidades"}
+                              to={"Habilidades".toString()}
+                              spy={true}
+                              smooth={true}
+                              duration={500}
+                              offset={10}
+                              onClick={()=>{setIsMenu(false);}}
+                            >  
+
+                              <Nav to="#Habilidades">Habilidades</Nav>
+                            </reactScrool.Link> 
+                          </li>
+                          <li>
+                              <reactScrool.Link
+                                activeClass="activeCategoryLink"
+                                className={"contacto"}
+                                to={"contacto".toString()}
+                                spy={true}
+                                smooth={true}
+                                duration={500}
+                                offset={10}
+                                onClick={()=>{setIsMenu(false);}}
+                              > 
+                                <Nav to="#contacto">Contacto</Nav>
+                              </reactScrool.Link> 
+                          </li>
+                      
+                    </Scrollspy>
+                  </center>
+
+                  
+                </div>
+              </div>
+
+              :
+              null
+          }
+
         </nav>
+       
         <div className="header__title-content">
             <h2 className="header__title-welcome">
               <font className="vertical-align">
@@ -128,34 +214,29 @@ const PortfolioLanding = () => {
         duration={0.5}
         delay={0}
       >
-         <Element
-              name={"sobreMi"}
-              className={"sobreMi"}
-              key={"display" + "sobreMi"}
-            >
-              <section id="sobreMi"  className="contentSilderSobreMi">
+            <section id="sobreMi"  className="contentSilderSobreMi">
               <h2 className="titleSubTitle">Sobre mí </h2>
-              <Container className="about__content-container" fluid>
-                
-                <Row  className="rowContent">
-                  <Col className="colItem" xs={12} md={12} xl={6} >
-                    <Container className="Container__content-container" fluid>
-                      <center>
-                        <Card.Img className="cardImg" variant="top" src="https://scontent.fpiu2-2.fna.fbcdn.net/v/t1.6435-1/125951858_3851591298217144_3810312621732437677_n.jpg?stp=dst-jpg_p200x200&_nc_cat=105&ccb=1-5&_nc_sid=7206a8&_nc_eui2=AeESgPiPFNgYuQKKLZ3Aiwabz8bW4AOOxQzPxtbgA47FDNwFdzb7Tk9TbGOJVaz2ZQbU8YElL64znKj-IK2cL9Wd&_nc_ohc=j92qwdt6v-gAX-OnoC9&_nc_ht=scontent.fpiu2-2.fna&oh=00_AT-pQcfkwFC5k3ykg3RF8hjws_4DwROdVOTE6lAq1GB33Q&oe=625D8C6C" />
-                      </center>
-                    </Container>
-                  </Col>
-                  <Col className="colItem" xs={12} md={12} xl={6} >
-                    
-                        <Card.Title className="cardTitle">¡Hola!</Card.Title>  
-                        <p>
-                        Soy Juan Ramírez Sánchez y soy desarrollador web, me encanta el desarrollo web y el desarrollo móvil. He realizado algunos proyectos y puedes ver mis mejores proyectos aquí o buscar mi github donde tengo todos mis proyectos.
-                        </p>
-                  </Col>
-                </Row>
-              </Container>
+                <Container className="about__content-container" fluid>
+                  
+                  <Row  className="rowContent">
+                    <Col className="colItem" xs={12} md={12} xl={6} >
+                      <Container className="Container__content-container" fluid>
+                        <center>
+                          <Card.Img className="cardImg" variant="top" src="https://scontent.fpiu2-2.fna.fbcdn.net/v/t1.6435-1/125951858_3851591298217144_3810312621732437677_n.jpg?stp=dst-jpg_p200x200&_nc_cat=105&ccb=1-5&_nc_sid=7206a8&_nc_eui2=AeESgPiPFNgYuQKKLZ3Aiwabz8bW4AOOxQzPxtbgA47FDNwFdzb7Tk9TbGOJVaz2ZQbU8YElL64znKj-IK2cL9Wd&_nc_ohc=j92qwdt6v-gAX-OnoC9&_nc_ht=scontent.fpiu2-2.fna&oh=00_AT-pQcfkwFC5k3ykg3RF8hjws_4DwROdVOTE6lAq1GB33Q&oe=625D8C6C" />
+                        </center>
+                      </Container>
+                    </Col>
+                    <Col className="colItem" xs={12} md={12} xl={6} >
+                      
+                          <Card.Title className="cardTitle">¡Hola!</Card.Title>  
+                          <p>
+                          Soy Juan Ramírez Sánchez y soy desarrollador web, me encanta el desarrollo web y el desarrollo móvil. He realizado algunos proyectos y puedes ver mis mejores proyectos aquí o buscar mi github donde tengo todos mis proyectos.
+                          </p>
+                    </Col>
+                  </Row>
+                </Container>
             </section >
-          </Element>
+
        
       </ScrollAnimation>
       <ScrollAnimation
@@ -285,25 +366,37 @@ const PortfolioLanding = () => {
           <h2 className="titleSubTitle title__content">Contactame </h2>
           <Container fluid>
             <Card className="cardContacto">
-              <Form  validated={validated} onSubmit={handleSubmit}>
-                <Form.Group className="mb-3" controlId="exampleForm.ControlCorreo">
+              <Form    ref={formRef}  validated={validated} onSubmit={handleSubmit}>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlNombre">
                   <Form.Label>Nombre</Form.Label>
                   <Form.Control 
                     required
                     type="text" 
+                    value={nombre}
                     placeholder=""
-                    autoComplete="off" />
+                    autoComplete="off"
+                    onChange={(e)=>{setNombre(e.target.value);}}
+                    />
                   <Form.Control.Feedback></Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlCorreo">
                   <Form.Label>Correo</Form.Label>
-                  <Form.Control required type="email" placeholder="" autoComplete="off"  />
+                  <Form.Control required type="email" placeholder=""
+                   autoComplete="off" 
+                   value={correo}
+                   onChange={(e)=>{setCorreo(e.target.value);}} />
                   <Form.Control.Feedback></Form.Control.Feedback>
 
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                <Form.Group className="mb-3" controlId="exampleForm.ControlMensaje">
                   <Form.Label>Mensaje</Form.Label>
-                  <Form.Control required as="textarea" rows={3} autoComplete="off" />
+                  <Form.Control 
+                    value={mensaje}
+                    required 
+                    as="textarea" 
+                    rows={3} 
+                    autoComplete="off"
+                    onChange={(e)=>{setMensaje(e.target.value);}} />
                   <Form.Control.Feedback></Form.Control.Feedback>
                 </Form.Group>
                 <center>
