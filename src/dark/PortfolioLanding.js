@@ -3,6 +3,10 @@ import Scrollspy from 'react-scrollspy';
 import {Row,Container,Col,Card,Form,Button,Nav} from 'react-bootstrap';
 import { FiMenu } from "react-icons/fi";
 import ScrollAnimation from "react-animate-on-scroll";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { AiFillFacebook,AiFillGithub ,AiFillLinkedin,AiOutlineWhatsApp} from 'react-icons/ai';
+
+import { faCoffee, faUserAstronaut,faFacebook } from '@fortawesome/free-solid-svg-icons';
 import  * as reactScrool from "react-scroll";
 import { Image } from 'antd';
 import { useRef } from 'react';
@@ -407,8 +411,32 @@ const PortfolioLanding = () => {
 
           </Container>
       </section>
+
+
     </div>
-   
+    <footer className="footer">
+        <div className="site-footer">
+            
+            <div className="redes-sociales">
+              <center>
+                <ul className="listRedes" style={{listStyle:"none",marginTop:20}}>
+                    <li><a href="https://github.com/jramez1996/" target="_blank"> <AiFillGithub style={{fontSize:48}} /> </a> </li>  
+                    <li> <a href="https://www.facebook.com/juan.ramirezsanchez.399/" target="_blank"><AiFillFacebook style={{fontSize:48}} /> </a> </li>  
+                    <li><a href="https://www.linkedin.com/in/juan-ramirez-sanchez-405355222/" target="_blank"><AiFillLinkedin style={{fontSize:48}} /></a> </li>  
+                    <li><a href="https://api.whatsapp.com/send?phone=51983415111" target="_blank"><AiOutlineWhatsApp style={{fontSize:48}}/></a> </li>  
+                  </ul>
+              </center>
+
+            </div>
+            <div className="copyright">
+              <center>
+                  <p data-section="Footer" data-value="footer-info">Page created by Nahuel61920</p>
+                  <p>© 2022. All Rights Reserved.</p>
+              </center>
+                
+            </div>
+        </div>
+    </footer>    
     </div>
   );
 };
